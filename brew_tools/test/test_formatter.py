@@ -1,9 +1,11 @@
-from decimal import Decimal
-from brew_tools import formatter
+""" This module contains PyTest unit tests for the 'formatter' module.
 
-__author__ = 'morris7200@gmail.com'
-__copyright_notice__ = """
-    This file is part of BrewTools.
+    (c) Aaron Morris, 2015
+    morris7200@gmail.com
+
+    Licensed under the GNU General Public License, v3
+
+    GPL Notice:  This file is part of BrewTools.
 
     BrewTools is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,7 +18,11 @@ __copyright_notice__ = """
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with BrewTools.  If not, see <http://www.gnu.org/licenses/>."""
+    along with BrewTools.  If not, see <http://www.gnu.org/licenses/>
+"""
+
+from decimal import Decimal
+from brew_tools import formatter
 
 
 def test__format_grain_bill__line():
