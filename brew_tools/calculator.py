@@ -133,3 +133,28 @@ def calc_grain_bill(target_gravity, volume, grain_list):
                  calc_expected_yield(convert_sg_to_ppg(grains.max_gravities[grain]), efficiency))))
         for (grain, ratio, efficiency) in grain_list
     )
+
+
+def calc_total_grain_weight(grain_bill):
+    """ Calculates the total weight of a grain bill by summing the weights of the grains.
+
+    :param grain_bill:  The grain bill to sum.
+    :return:  The total sum of the individual grain weights
+    """
+
+    total_weight = Decimal('0')
+    for (grain, weight) in grain_bill:
+        total_weight += Decimal(weight)
+
+    return to_decimal(total_weight)
+
+
+def calc_mash_water_volume(water_grist_ratio, grains_weight):
+    """  Calculates the volume of mash water necessary to achieve the target water-to_grist ratio
+
+    :param water_grist_ratio:  The target ratio to achieve.
+    :param grains_weight:  The amount of grains in the grist.
+    :return:  The amount of water necessary to achieve the ratio.
+    """
+    
+    return to_decimal(water_grist_ratio * grains_weight)

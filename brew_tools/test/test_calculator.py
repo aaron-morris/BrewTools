@@ -87,3 +87,16 @@ def test__calc_grain_bill__calculates():
     wheat_weight = calculator.convert_lbs_to_lbs_ounces(calculator.to_decimal(52 * 5.5 * .67 / (38 * .68), 3))
     pale_weight = calculator.convert_lbs_to_lbs_ounces(calculator.to_decimal(52 * 5.5 * .33 / (37 * .68), 3))
     assert grain_bill == (('American Wheat', wheat_weight), ('American Pale (2-Row)', pale_weight))
+
+
+def test__calc_total_grain_weight__calculates():
+    grain_bill = (('grain1', 1.1), ('grain2', 2.2), ('grain3', 3.3))
+    assert calculator.calc_total_grain_weight(grain_bill) == Decimal('6.6')
+
+    grain_bill = (('grain1', 1.1234), ('grain2', 2.2345), ('grain3', 3.3456))
+    assert calculator.calc_total_grain_weight(grain_bill) == Decimal('6.704')
+
+
+def test__calc_mash_water_volume__calculates():
+    assert calculator.calc_mash_water_volume(1.25, 7.75) == Decimal('9.688')
+    assert calculator.calc_mash_water_volume(1.5, 8) == Decimal('12')
