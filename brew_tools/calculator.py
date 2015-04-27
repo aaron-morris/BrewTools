@@ -71,7 +71,7 @@ def convert_lbs_to_lbs_ounces(lbs):
      Example:  1.5 lbs == (1 lb, 8 oz)
 
     :param lbs:  The float representing pounds.
-    :return:  The tuple representing lbs and ounces.
+    :return:  The tuple representing pounds and ounces.
     """
 
     pounds = int(lbs)
@@ -91,7 +91,7 @@ def calc_total_gravity_points(specific_gravity, gallons):
 
 
 def calc_expected_yield(max_yield, efficiency):
-    """ Calculates the expected yield of a grain based on the maximum yield and the expected mash efficiency.
+    """ Calculates the expected mash yield of a grain based on the maximum yield and the expected mash efficiency.
 
     :param max_yield:  The maximum possible yield in gravity points.
     :param efficiency: The expected conversion efficiency of the grain in the mash.
@@ -104,10 +104,10 @@ def calc_expected_yield(max_yield, efficiency):
 def calc_grain_qty(total_gravity_points, grain_ratio, expected_yield):
     """ Calculates the necessary quantity of a grain based on its ratio within the recipe and its expected mash yield.
 
-    :param total_gravity_points:
-    :param grain_ratio:
-    :param expected_yield:
-    :return:
+    :param total_gravity_points:  The recipe's total number of gravity points.
+    :param grain_ratio:  The ratio of gravity points provided by the grain compared to the total gravity points.
+    :param expected_yield:  The expected yield of the grain in the mash.
+    :return:  The grain's total recipe weight, in pounds.
     """
 
     return to_decimal(total_gravity_points * Decimal(grain_ratio) / Decimal(expected_yield))
@@ -117,9 +117,9 @@ def calc_grain_bill(target_gravity, volume, grain_list):
     """ Calculate a recipe's grain bill based on the target gravity, target volume, and the recipe's grain list.
 
     :param target_gravity: The target original gravity.
-    :param volume: The target post-boil volume.
+    :param volume: The target post-boil volume, in gallons.
     :param grain_list: The list of grains in the recipe as a tuple:  (grain_name, ratio, efficiency)
-    :return:
+    :return:  The recipe's grain bill as a tuple: (grain_name, weight_in_pounds)
     """
 
     total_gravity_points = calc_total_gravity_points(target_gravity, volume)
@@ -139,7 +139,7 @@ def calc_total_grain_weight(grain_bill):
     """ Calculates the total weight of a grain bill by summing the weights of the grains.
 
     :param grain_bill:  The grain bill to sum.
-    :return:  The total sum of the individual grain weights
+    :return:  The total sum of the individual grain weights, in pounds.
     """
 
     total_weight = Decimal('0')
@@ -152,9 +152,9 @@ def calc_total_grain_weight(grain_bill):
 def calc_mash_water_volume(water_grist_ratio, grains_weight):
     """  Calculates the volume of mash water necessary to achieve the target water-to_grist ratio
 
-    :param water_grist_ratio:  The target ratio to achieve.
-    :param grains_weight:  The amount of grains in the grist.
-    :return:  The amount of water necessary to achieve the ratio.
+    :param water_grist_ratio:  The target ratio to achieve in quarts/pounds.
+    :param grains_weight:  The amount of grains in the grist, in pounds.
+    :return:  The amount of water necessary to achieve the ratio, in quarts.
     """
     
     return to_decimal(water_grist_ratio * grains_weight)
