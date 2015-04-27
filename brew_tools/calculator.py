@@ -158,3 +158,41 @@ def calc_mash_water_volume(water_grist_ratio, grains_weight):
     """
     
     return to_decimal(water_grist_ratio * grains_weight)
+
+
+def calc_strike_temp(water_grist_ratio, initial_temp, target_temp):
+    """ Calculates the necessary strike temperature of the mash water.
+
+    :param water_grist_ratio: The water-to-grist ratio as quarts/pound.
+    :param initial_temp: The current temperature of the grains (at room temperature), in degrees Fahrenheit.
+    :param target_temp: The target temperature of the mash after the grains are added, in degrees Fahrenheit.
+    :return:  The necessary temperature of the strike water to achieve the target temperature, in degrees Fahrenheit.
+    """
+
+    water_grist_ratio = Decimal(water_grist_ratio)
+    initial_temp = Decimal(initial_temp)
+    target_temp = Decimal(target_temp)
+    thermodynamic_constant = Decimal('0.2')
+
+    return to_decimal((thermodynamic_constant / water_grist_ratio) * (target_temp - initial_temp) + target_temp)
+
+
+def calc_infusion_volume(initial_temp, target_temp, infusion_temp, water_in_mash, grain_in_mash):
+    """ Calculates the volume of water necessary to increase the mash temperature to the target temperature.
+
+    :param initial_temp:  The current temperature of the mash, in degrees Fahrenheit.
+    :param target_temp:  The target temperature of the mash, in degrees Fahrenheit.
+    :param infusion_temp:  The temperature of the infusion water being added to the mash, in degrees Fahrenheit.
+    :param water_in_mash:  The amount of water in the mash, in quarts.
+    :param grain_in_mash:   The amount of grains in the mash, in pounds.
+    :return:  The amount of water (in quarts) to add to the mash to achieve the target temperature.
+    """
+
+    initial_temp = Decimal(initial_temp)
+    target_temp = Decimal(target_temp)
+    infusion_temp = Decimal(infusion_temp)
+    water_in_mash = Decimal(water_in_mash)
+    grain_in_mash = Decimal(grain_in_mash)
+    thermodynamic_constant = Decimal('0.2')
+
+    return to_decimal((target_temp - initial_temp) * (thermodynamic_constant * grain_in_mash + water_in_mash) / (infusion_temp - target_temp))

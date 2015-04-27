@@ -100,3 +100,13 @@ def test__calc_total_grain_weight__calculates():
 def test__calc_mash_water_volume__calculates():
     assert calculator.calc_mash_water_volume(1.25, 7.75) == Decimal('9.688')
     assert calculator.calc_mash_water_volume(1.5, 8) == Decimal('12')
+
+
+def test__calc_strike_temp__calculates():
+    assert calculator.calc_strike_temp(1, 70, 104) == Decimal('110.8')
+    assert calculator.calc_strike_temp(2, 70, 152) == Decimal('160.2')
+
+
+def test__calc_infusion_volume__calculates():
+    assert calculator.calc_infusion_volume(104, 140, 210, 8, 8) == Decimal('4.937')
+    assert calculator.calc_infusion_volume(140, 158, 210, 12.9, 8) == Decimal('5.019')
