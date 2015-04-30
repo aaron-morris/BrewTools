@@ -196,3 +196,14 @@ def calc_infusion_volume(initial_temp, target_temp, infusion_temp, water_in_mash
     thermodynamic_constant = Decimal('0.2')
 
     return to_decimal((target_temp - initial_temp) * (thermodynamic_constant * grain_in_mash + water_in_mash) / (infusion_temp - target_temp))
+
+
+def calc_grain_absorption(grain_weight, absorption_rate):
+    """ Calculates the approximate quantity of water absorbed by the spent grains in the mash.
+
+    :param grain_weight:  The weight of the grains in the mash.
+    :param absorption_rate:  The rate of absorption, in gallons per pound.
+    :return:  The quantity of absorbed water, in gallons.
+    """
+
+    return to_decimal(Decimal(grain_weight) * Decimal(absorption_rate))

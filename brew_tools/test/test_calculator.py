@@ -110,3 +110,8 @@ def test__calc_strike_temp__calculates():
 def test__calc_infusion_volume__calculates():
     assert calculator.calc_infusion_volume(104, 140, 210, 8, 8) == Decimal('4.937')
     assert calculator.calc_infusion_volume(140, 158, 210, 12.9, 8) == Decimal('5.019')
+
+
+def test__calc_grain_absorption__calculates():
+    assert calculator.calc_grain_absorption(1, .08) == Decimal('.08')
+    assert calculator.calc_grain_absorption(4.5, .2) == Decimal('0.9')
