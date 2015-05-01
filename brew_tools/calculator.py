@@ -199,11 +199,45 @@ def calc_infusion_volume(initial_temp, target_temp, infusion_temp, water_in_mash
 
 
 def calc_grain_absorption(grain_weight, absorption_rate):
-    """ Calculates the approximate quantity of water absorbed by the spent grains in the mash.
+    """ Calculates the approximate volume of water absorbed by the spent grains in the mash.
 
     :param grain_weight:  The weight of the grains in the mash.
     :param absorption_rate:  The rate of absorption, in gallons per pound.
-    :return:  The quantity of absorbed water, in gallons.
+    :return:  The volume of absorbed water, in gallons.
     """
 
     return to_decimal(Decimal(grain_weight) * Decimal(absorption_rate))
+
+
+def calc_evaporation_loss(boil_length_minutes, evaporation_gph):
+    """ Calculates the expected volume of water loss due to evaporation during the boil.
+
+    :param boil_length_mins:  The duration of the boil, in minutes.
+    :param evaporation_rate:   The expected rate of evaporation, in gallons-per-hour.
+    :return:  The volume of expected water loss, in gallons.
+    """
+
+    return to_decimal(Decimal(boil_length_minutes) / 60 * Decimal(evaporation_gph))
+
+
+def calc_shrinkage_loss(initial_volume):
+    """ Calculates the expected volume of water loss due to shrinkage during wort cooling.
+
+    :param initial_volume:  The initial volume of water, pre-cooling.
+    :return:  The expected volume of water loss due to shrinkage.
+    """
+
+    constant_shrinkage_rate = Decimal(.04)
+    return to_decimal(Decimal(initial_volume) * constant_shrinkage_rate)
+
+
+def calc_required_water_volume(
+        target_volume, grain_weight, absorption_rate, equipment_losses, boil_length_minutes, evaporation_gph, trub_loss):
+
+    req_volume = Decimal(target_volume) + Decimal(trub_loss)
+    req_volume = req_volume + calc_shrinkage_loss(req_volume)
+    req_volume = req_volume + calc_evaporation_loss(boil_length_minutes, evaporation_gph)
+    req_volume = req_volume + Decimal(equipment_losses)
+    req_volume = req_volume + calc_grain_absorption(grain_weight, absorption_rate)
+
+    return to_decimal(req_volume)

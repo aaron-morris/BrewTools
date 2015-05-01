@@ -115,3 +115,17 @@ def test__calc_infusion_volume__calculates():
 def test__calc_grain_absorption__calculates():
     assert calculator.calc_grain_absorption(1, .08) == Decimal('.08')
     assert calculator.calc_grain_absorption(4.5, .2) == Decimal('0.9')
+
+
+def test__calc_evaporation_loss__calculates():
+    assert calculator.calc_evaporation_loss(60, .5) == Decimal('.5')
+    assert calculator.calc_evaporation_loss(90, .75) == Decimal ('1.125')
+
+
+def test__calc_shrinkage_loss__calculates():
+    assert calculator.calc_shrinkage_loss(1) == Decimal('.04')
+    assert calculator.calc_shrinkage_loss(3) == Decimal('.12')
+
+
+def test__calc_required_water_volume__calculates():
+    assert calculator.calc_required_water_volume(5, 8.5, .221, 1, 90, .314, .5) == Decimal('9.07')
